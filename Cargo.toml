@@ -1,0 +1,17 @@
+[package]
+name = "api-marketplace"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest-graphql = "1.0.0"
+serde = "1.0.114"
+serde_derive = "1.0.114"
+serde_json = "1.0.56"
+tokio = { version = "1.1.1", features = ["full"] }
+axum = "0.5"
+tower-http = { version = "0.4.0", features = ["trace", "cors"] }
+tower = "0.4.13"
+anyhow = "1.0.71"
