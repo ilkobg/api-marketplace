@@ -18,6 +18,7 @@ pub struct Listing {
     pub token_id: String,
     pub nft_contract_address: String,
     pub price: String,
+    pub is_active: bool,
     pub block_number: String,
     pub block_timestamp: String,
     pub transaction_hash: String,
@@ -220,6 +221,7 @@ async fn listings(by_owner: Option<String>) -> Result<Vec<Listing>> {
                     tokenId
                     nftContractAddress
                     price
+                    isActive
                     blockTimestamp
                     blockNumber
                     transactionHash
@@ -239,18 +241,29 @@ async fn listings(by_owner: Option<String>) -> Result<Vec<Listing>> {
             .lists
             .into_iter()
             .filter(|list| list.owner == owner)
+            .filter(|list| list.is_active == true)
             .collect();
 
         if listings.len() == 0 {
-            return Err(anyhow!(format!("No listings for owner {}", owner)));
+            return Err(anyhow!(format!("No active listings for owner {}", owner)));
         }
 
         Ok(listings)
     } else {
         if data.lists.len() == 0 {
-            return Err(anyhow!("No listings found"));
+            return Err(anyhow!("No active listings found"));
         } else {
-            Ok(data.lists)
+            let listings: Vec<Listing> = data
+            .lists
+            .into_iter()
+            .filter(|list| list.is_active == true)
+            .collect();
+
+            if listings.len() == 0 {
+                return Err(anyhow!(format!("No active listings found",)));
+            }
+
+            Ok(listings)
         }
     }
 }
