@@ -355,6 +355,7 @@ async fn floor_price(nft_contract_address: String) -> Result<i64> {
                     tokenId
                     nftContractAddress
                     price
+                    isActive
                     blockTimestamp
                     blockNumber
                     transactionHash
